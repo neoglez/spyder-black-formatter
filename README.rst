@@ -3,7 +3,7 @@ Spyder IDE black formatter plugin
 
 Description
 -----------
-Spyder IDE plugin to format code using `black <https://github.com/ambv/black)>`_.
+Spyder IDE plugin to format code using `black <https://github.com/ambv/black>`_.
 
 The source code in this repo is heavely inspired in the previous work make by
 others in this `repo <https://github.com/spyder-ide/spyder-autopep8>`_.

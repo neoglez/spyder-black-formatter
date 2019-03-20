@@ -47,7 +47,7 @@ def get_python_version():
 
 target_version = (
     ("python 3.3", "PY33"),
-    ("puthon 3.4", "PY34"),
+    ("python 3.4", "PY34"),
     ("python 3.5", "PY35"),
     ("python 3.6", "PY36"),
     ("python 3.7", "PY37"),

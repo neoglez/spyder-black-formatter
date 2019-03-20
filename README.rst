@@ -23,4 +23,11 @@ conda install spyder_black_formatter -c spyder-ide
 Usage
 -----
 
+License
+-------
+
+MIT (see License.txt in this repository).
+
+
+
 

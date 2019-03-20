@@ -3,22 +3,41 @@ Spyder IDE black formatter plugin
 
 Description
 -----------
-Spyder IDE plugin to format code using black.
+Spyder IDE plugin to format code using [black](https://github.com/ambv/black).
 
-Installation (TO-DO)
---------------------
+Installation
+------------
 
 Using pip
 
 ::
 
-pip install spyder_black_formatter
+pip install git+https://github.com/kikocorreoso/spyder-black-formatter.git
+
+Using conda (what I think it is the easiest way)
+
+::
+
+conda install conda-build
+git clone https://github.com/kikocorreoso/spyder-black-formatter.git
+cd spyder-black-formatter/
+conda develop .
+
+Uninstallation
+--------------
+
+Using pip
+
+::
+
+pip uninstall spyder_black_formatter
 
 Using conda
 
 ::
 
-conda install spyder_black_formatter -c spyder-ide
+cd /path/to/spyder-black-formatter/ # local repo from where it was installed
+conda develop -u .
 
 Usage
 -----

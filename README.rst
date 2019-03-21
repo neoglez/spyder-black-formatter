@@ -24,8 +24,8 @@ Using conda (what I think it is the easiest way)
     cd spyder-black-formatter/
     conda develop .
 
-Uninstallation
---------------
+Uninstall
+---------
 
 Using pip
 ::

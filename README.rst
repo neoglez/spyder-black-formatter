@@ -1,6 +1,9 @@
 Spyder IDE black formatter plugin
 =================================
 
+
+**WARNING: This plugin is not compatible with Spyder >= 4.x.x due to changes in the internal Spyder plugin infrastructure.**
+
 Description
 -----------
 Spyder IDE plugin to format code using `black <https://github.com/ambv/black>`_.

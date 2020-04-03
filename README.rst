@@ -1,15 +1,12 @@
 Spyder IDE black formatter plugin
 =================================
 
-
-**WARNING: This plugin is not compatible with Spyder >= 4.x.x due to changes in the internal Spyder plugin infrastructure.**
-
 Description
 -----------
 Spyder IDE plugin to format code using `black <https://github.com/ambv/black>`_.
 
 The source code in this repo is heavely inspired in the previous work make by
-others in this `repo <https://github.com/spyder-ide/spyder-autopep8>`_.
+others in this `repo <https://github.com/kikocorreoso/spyder-black-formatter>`_.
 
 Installation
 ------------
@@ -17,13 +14,13 @@ Installation
 Using pip
 ::
 
-    pip install git+https://github.com/kikocorreoso/spyder-black-formatter.git
+    pip install git+https://github.com/neoglez/spyder-black-formatter.git
 
 Using conda (what I think it is the easiest way)
 ::
 
     conda install conda-build
-    git clone https://github.com/kikocorreoso/spyder-black-formatter.git
+    git clone https://github.com/neoglez/spyder-black-formatter.git
     cd spyder-black-formatter/
     conda develop .
 

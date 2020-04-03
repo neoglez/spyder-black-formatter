@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
 # -----------------------------------------------------------------------------
-# Copyright (c) kiko correoso
+# Copyright (c) neoglez
 #
 # Licensed under the terms of the MIT License
 # (see LICENSE.txt for details)
 # -----------------------------------------------------------------------------
 from qtpy.QtGui import QTextCursor
-from qtpy.QtWidgets import QVBoxLayout, QGroupBox, QGridLayout, QLabel
+from qtpy.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QGroupBox,
+    QGridLayout,
+    QLabel
+)
 from spyder.config.base import get_translation
-from spyder.config.gui import fixed_shortcut
 from spyder.utils.qthelpers import create_action
 from spyder.py3compat import to_text_string
 import qtawesome as qta
@@ -76,7 +81,7 @@ class BlackConfigPage(PluginConfigPage):
 
         # General options
         # Hack : the spinbox widget will be added to self.spinboxes
-        spinboxes_before = set(self.spinboxes)
+        # spinboxes_before = set(self.spinboxes)
         # line length
         line_length_spin = self.create_spinbox(
             _("Line length: "),
@@ -86,9 +91,10 @@ class BlackConfigPage(PluginConfigPage):
             min_=40,
             max_=200,
             step=1,
+            tip=_("Set line lenght"),
         )
-        spinbox = set(self.spinboxes) - spinboxes_before
-        spinbox = spinbox.pop()
+        # spinbox = set(self.spinboxes) - spinboxes_before
+        # spinbox = spinbox.pop()
 
         # target python version
         versions_group = QGroupBox(_("Target versions"))
@@ -128,7 +134,12 @@ class BlackConfigPage(PluginConfigPage):
         self.setLayout(vlayout)
 
 
-class DummyDock:
+class DummyDock(QWidget):
+    """Dummy widget."""
+
+    def __init__(self, parent):
+        QWidget.__init__(self, parent)
+
     def close(self):
         pass
 
@@ -137,12 +148,22 @@ class BlackFormatterPlugin(BasePluginClass):
     """black formatter plugin."""
 
     CONF_SECTION = "spyder_black_formatter"
+
     CONFIGWIDGET_CLASS = BlackConfigPage
 
-    def __init__(self, main):
-        print("ENTRO")
+    CONF_DEFAULTS = {
+        "line_length": 80,
+        "target_version": target_version,
+        "skip_string_normalization": (("False", False), ("True", True)),
+    }
+
+    def __init__(self, main=None):
         super(BlackFormatterPlugin, self).__init__(main)
-        self.dockwidget = DummyDock()
+        self.widget = DummyDock(main)
+        # Graphical view
+        layout = QVBoxLayout()
+        layout.addWidget(self.widget)
+        self.setLayout(layout)
 
     # --- SpyderPluginWidget API ----------------------------------------------
     def get_plugin_title(self):
@@ -154,21 +175,22 @@ class BlackFormatterPlugin(BasePluginClass):
         icon = qta.icon("fa5s.bold")
         return icon
 
+    def get_focus_widget(self):
+        """Return the widget to give focus to."""
+        return self.widget
+
     def register_plugin(self):
         """Register plugin in Spyder's main window."""
         black_act = create_action(
             self.main,
             _("Format code using Black"),
+            shortcut="Shift+F5",
             icon=self.get_plugin_icon(),
             triggered=self.run_black,
         )
-        fixed_shortcut("Shift+F5", self.main, self.run_black)
         self.main.source_menu_actions += [None, black_act]
         self.main.editor.pythonfile_dependent_actions += [black_act]
-
-    def apply_plugin_settings(self, options):
-        """Apply configuration file's plugin settings."""
-        pass
+        self.add_dockwidget()
 
     def closing_plugin(self, cancelable=False):
         """Perform actions before parent main window is closed."""
@@ -200,7 +222,9 @@ class BlackFormatterPlugin(BasePluginClass):
             cursor.movePosition(QTextCursor.StartOfLine)
             position_start = cursor.position()
             cursor.setPosition(position_end, QTextCursor.KeepAnchor)
-            cursor.movePosition(QTextCursor.StartOfLine, QTextCursor.KeepAnchor)
+            cursor.movePosition(
+                QTextCursor.StartOfLine, QTextCursor.KeepAnchor
+            )
             position_lastline_start = cursor.position()
             if not position_end == position_lastline_start:
                 cursor.movePosition(
@@ -218,7 +242,7 @@ class BlackFormatterPlugin(BasePluginClass):
         )
 
         # Run Black
-        line_length = self.get_option("line_length", 80)
+        line_length = int(self.get_option("line_length", 80))
         skip_string = self.get_option("skip_string_normalization", False)
         target = []
         for v in target_version:

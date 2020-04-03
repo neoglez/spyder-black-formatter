@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # -----------------------------------------------------------------------------
-# Copyright (c) kiko correoso
+# Copyright (c) neoglez
 #
 # Licensed under the terms of the MIT License
 # (see LICENSE.txt for details)
@@ -47,7 +47,7 @@ setup(
     keywords=["Spyder", "Plugin", "Black", "Qt", "PyQt5", "PySide2"],
     url="https://github.com/kikocorreoso/spyder-black-formatter",
     license="MIT",
-    author="kiko correoso",
+    author="neoglez",
     author_email="",
     description="Spyder IDE plugin to format code using black.",
     long_description=get_description(),
@@ -63,5 +63,6 @@ setup(
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ],
 )
